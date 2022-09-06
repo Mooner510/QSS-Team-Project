@@ -18,10 +18,5 @@ public class Player : Entity.Entity
             pos.x = Utils.Distance(pos.x + speed * Time.deltaTime, -2.4f, 2.4f);
             transform.position = pos;
         }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-        }
     }
 }
