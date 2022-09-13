@@ -9,8 +9,7 @@ public static class Utils
 
     public static string TimeFormat(int time)
     {
-        if (time < 10) return $"0{time}";
-        return $"{time}";
+        return time < 10 ? $"0{time}" : $"{time}";
     }
 
 }

@@ -14,7 +14,7 @@ namespace Enemy.Enemies
         {
             for (var i = 0; i < 6; i++)
             {
-                var o = Instantiate(toxic, transform.position, Quaternion.Euler(0, 0, i * 60));
+                var o = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, i * 60));
                 o.GetComponent<Toxic>().SetDamage(GetDamage());
             }
         }

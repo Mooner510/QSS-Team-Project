@@ -5,7 +5,7 @@ namespace Enemy
 {
     public abstract class Enemy : Entity
     {
-        [SerializeField] protected GameObject toxic;
+        [SerializeField] protected GameObject bullet;
         private bool _attackable;
         private float _lastAttack;
         

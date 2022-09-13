@@ -12,7 +12,7 @@ namespace Enemy.Enemies
 
         protected override void Attack()
         {
-            var o = Instantiate(toxic, transform.position, Quaternion.Euler(0, 0, 180));
+            var o = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, 180));
             o.GetComponent<Toxic>().SetDamage(GetDamage());
         }
     }

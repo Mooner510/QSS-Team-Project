@@ -452,12 +452,12 @@ MonoBehaviour:
   virus: {fileID: 1362878836576541542, guid: c759bf34f48f5e44990353eb76cd600f, type: 3}
   startBacteria: 1
   startNormalBacteria: 1
-  startCancer: 3
-  startVirus: 2
+  startCancer: 4
+  startVirus: 3
   endBacteria: 2
   endNormalBacteria: 3
-  endCancer: 5
-  endVirus: 5
+  endCancer: 15
+  endVirus: 7
 --- !u!1 &722618294
 GameObject:
   m_ObjectHideFlags: 0
