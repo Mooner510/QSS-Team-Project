@@ -17,12 +17,6 @@ public class Toxic : MonoBehaviour
 
     public void SetDamage(float damage) => _damage = damage;
     
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (!col.gameObject.CompareTag("Player")) return;
-        var player = GameObject.Find("Player");
-        player.GetComponent<Player>().Damage(_damage);
-        
-        Destroy(gameObject);
-    }
+
+    public float GetDamage() => _damage;
 }
