@@ -7,6 +7,12 @@ TagManager:
   - Enemy
   - Toxic
   - Capsule
+  - BulletUpgrade
+  - invincibility
+  - heal
+  - PainDown
+  - ScoreUp
+  - SpeedUp
   layers:
   - Default
   - TransparentFX
