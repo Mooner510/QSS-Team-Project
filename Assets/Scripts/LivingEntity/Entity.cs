@@ -1,38 +1,44 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Entity
+namespace LivingEntity
 {
     public class Entity : MonoBehaviour, IEntity
     {
-        [SerializeField] protected float health;
-        [SerializeField] protected float speed;
-        [SerializeField] protected float damage;
+        [SerializeField] private float maxHealth;
+        [SerializeField] private float speed;
+        [SerializeField] private float damage;
+        private float _health;
         private float _defaultSpeed;
-        
-        void Start()
+
+        protected virtual void Start()
         {
+            _health = maxHealth;
             _defaultSpeed = speed;
         }
 
-        public float GetHealth() => health;
+        public float GetMaxHealth() => maxHealth;
 
-        public void SetHealth(float hp) => health = Math.Min(Math.Max(hp, 0), 100);
+        public void SetMaxHealth(float hp) => maxHealth = hp;
+
+        public void AddMaxHealth(float hp) => maxHealth += hp;
+
+        public float GetHealth() => _health;
+
+        public void SetHealth(float hp) => _health = Math.Min(Math.Max(hp, 0), maxHealth);
 
         public void Damage(float hp)
         {
             if (hp < 0) throw new ArgumentException("Cannot Input Negative Number");
-            health = Math.Max(health - hp, 0);
+            _health = Math.Max(_health - hp, 0);
             if(IsDeath()) Kill();
         }
 
         public void Heal(float hp)
         {
             if (hp < 0) throw new ArgumentException("Cannot Input Negative Number");
-            health = Math.Min(health + hp, 100);
+            _health = Math.Min(_health + hp, 100);
         }
-
-        public float GetSpeed() => speed;
 
         public float GetDamage() => damage;
 
@@ -42,7 +48,7 @@ namespace Entity
             damage = dmg;
         }
 
-        public void AddSpeed(float spd) => speed = Math.Min(Math.Max(health + spd, 0), 100);
+        public float GetSpeed() => speed;
 
         public void SetSpeed(float spd)
         {
@@ -50,9 +56,13 @@ namespace Entity
             speed = Math.Min(Math.Max(spd, 0), 100);
         }
 
+        public void AddSpeed(float spd) => speed = Math.Min(Math.Max(_health + spd, 0), 100);
+
+        public void ResetSpeed() => speed = _defaultSpeed;
+
         public float GetDefaultSpeed() => _defaultSpeed;
 
-        public bool IsDeath() => health <= 0;
+        public bool IsDeath() => _health <= 0;
 
         public void Kill() => Destroy(gameObject);
     }

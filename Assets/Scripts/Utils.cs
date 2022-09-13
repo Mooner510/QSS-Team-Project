@@ -6,4 +6,11 @@ public static class Utils
     {
         return Math.Min(Math.Max(value, min), max);
     }
+
+    public static string TimeFormat(int time)
+    {
+        if (time < 10) return $"0{time}";
+        return $"{time}";
+    }
+
 }
