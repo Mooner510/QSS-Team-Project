@@ -16,6 +16,8 @@ public class Toxic : MonoBehaviour
     }
 
     public void SetDamage(float damage) => _damage = damage;
+
+    public float GetDamage() => _damage;
     
     private void OnCollisionEnter2D(Collision2D col)
     {
