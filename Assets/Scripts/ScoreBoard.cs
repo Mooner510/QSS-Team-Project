@@ -7,33 +7,35 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] private Text painText;
     [SerializeField] private Text timerText;
     [SerializeField] private Text scoreText;
+    [SerializeField] private float enemyAttackBoost;
+    [SerializeField] private float enemySpawnBoost;
+    [SerializeField] private float speedBoostForPlayer;
 
-    private static float _pain;
     private static int _score;
     private static float _timerStart;
+
+    public float GetEnemyAttackBoost() => enemyAttackBoost;
+
+    public float GetEnemySpawnBoost() => enemySpawnBoost;
+
+    public float GetSpeedBoostForPlayer() => speedBoostForPlayer;
 
     private void Start()
     {
         _timerStart = Time.realtimeSinceStartup;
-        _pain = 0;
         _score = 0;
     }
 
     private void Update()
     {
-        healthText.text = $"{(int) GameObject.Find("Player").GetComponent<Player>().GetHealth()}% HP";
-        painText.text = $"Pain {(int) _pain}%";
+        var player = GameObject.Find("Player").GetComponent<Player>();
+        healthText.text = $"{(int) player.GetHealth()}% HP";
+        painText.text = $"Pain {(int) player.GetPain()}%";
 
         var time = (int) (Time.realtimeSinceStartup - _timerStart);
         timerText.text = $"{time / 60}m {Utils.TimeFormat(time % 60)}s";
         scoreText.text = $"{_score}";
     }
-
-    public static float GetPain() => _pain;
-
-    public static void SetPain(float pain) => _pain = pain;
-
-    public static void AddPain(float pain) => _pain += pain;
 
     public static int GetScore() => _score;
 

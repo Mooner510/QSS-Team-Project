@@ -26,7 +26,11 @@ namespace LivingEntity
         {
             if (_shoot + _shootDelay >= Time.realtimeSinceStartup) return;
             _shoot = Time.realtimeSinceStartup;
-            Instantiate(capsule, transform.position, transform.rotation);
+            var pos = transform.position;
+            Instantiate(capsule, pos, Quaternion.identity);
+            // for (var i = 0; i < 5; i++) Instantiate(capsule, pos, Quaternion.Euler(0, 0, Random.Range(-6f, 6f)));
+            // if (!(Random.value <= 0.25f)) return;
+            // for (var i = 0; i < 5; i++) Instantiate(capsule, pos, Quaternion.Euler(0, 0, Random.Range(-6f, 6f)));
         }
     }
 }

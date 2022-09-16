@@ -420,6 +420,9 @@ MonoBehaviour:
   painText: {fileID: 2111029996}
   timerText: {fileID: 469511199}
   scoreText: {fileID: 371634087}
+  enemyAttackBoost: 1
+  enemySpawnBoost: 1
+  speedBoostForPlayer: 1
 --- !u!4 &528566836
 Transform:
   m_ObjectHideFlags: 0
@@ -453,11 +456,11 @@ MonoBehaviour:
   startBacteria: 1
   startNormalBacteria: 1
   startCancer: 4
-  startVirus: 3
+  startVirus: 2
   endBacteria: 2
   endNormalBacteria: 3
-  endCancer: 15
-  endVirus: 7
+  endCancer: 10
+  endVirus: 5
 --- !u!1 &722618294
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 1424161153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.01, y: -3.92, z: 0}
-  m_LocalScale: {x: 0.7198, y: 0.7198, z: 0.7198}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -640,8 +643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  speed: 4
-  damage: 10
+  speed: 3.5
+  damage: 1
 --- !u!58 &1424161157
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -671,7 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capsule: {fileID: 2937492897169841707, guid: 9d92016b2b0de194cbb864e819218329, type: 3}
-  defaultShootDelay: 0.5
+  defaultShootDelay: 0.6
 --- !u!50 &1424161159
 Rigidbody2D:
   serializedVersion: 4

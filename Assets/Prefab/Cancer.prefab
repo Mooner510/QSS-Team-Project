@@ -114,6 +114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   speed: 0.8
-  damage: 0
+  damage: 12
   bullet: {fileID: 7175071125821031328}
-  attackDelay: 5
+  attackDelay: 3
+  distanceFrame: 140
+  cloneDistance: 1
+  cloneMaxCount: 2

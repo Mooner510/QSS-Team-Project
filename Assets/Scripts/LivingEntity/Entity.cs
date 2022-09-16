@@ -64,6 +64,6 @@ namespace LivingEntity
 
         public bool IsDeath() => _health <= 0;
 
-        public void Kill() => Destroy(gameObject);
+        public virtual void Kill() => Destroy(gameObject);
     }
 }

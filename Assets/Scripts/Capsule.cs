@@ -6,7 +6,7 @@ public class Capsule : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * speed);
+        transform.Translate(transform.up * Time.deltaTime * speed);
     }
 
     private void OnBecameInvisible()
@@ -14,12 +14,10 @@ public class Capsule : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (!col.gameObject.CompareTag("Enemy")) return;
-        ScoreBoard.AddScore(4);
-            
-        Destroy(col.gameObject);
-        Destroy(gameObject);
-    }
+    // private void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     if(!col.gameObject.CompareTag("Enemy") && !col.gameObject.CompareTag("Toxic")) return;
+    //
+    //     Destroy(gameObject);
+    // }
 }

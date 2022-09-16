@@ -1,37 +1,43 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Enemy.Enemies
 {
     public class Cancer : Enemy
     {
         [SerializeField] private float attackDelay;
-        private float _pushing = 1f;
+        [SerializeField] private int distanceFrame;
+        [SerializeField] private float cloneDistance;
+        [SerializeField] private float cloneMaxCount;
+        private bool _cloned;
 
         public override EnemyType GetEnemyType() => EnemyType.Cancer;
 
         protected override float GetAttackDelay() => attackDelay;
 
-        private void Push()
+        private IEnumerator Pushing(GameObject o)
         {
-            InvokeRepeating(nameof(Pushing), 0, 0.05f);
-            Invoke(nameof(StopPushing), 2);
-        }
-
-        private void StopPushing()
-        {
-            CancelInvoke(nameof(Pushing));
-        }
-
-        private void Pushing()
-        {
-            _pushing *= 0.95f;
-            transform.Translate(Vector3.forward * _pushing * 0.05f);
+            var v = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * cloneDistance;
+            var push = 1f;
+            for (var i = 0; i < distanceFrame; i++)
+            {
+                yield return null;
+                if(o == null) break;
+                push *= 0.98f;
+                o.transform.Translate(v * push * Time.deltaTime);
+            }
         }
 
         protected override void Attack()
         {
-            var o = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
-            o.GetComponent<Cancer>().Push();
+            if(_cloned) return;
+            var count = Random.Range(1, cloneMaxCount + 1);
+            for (var i = 0; i < count; i++)
+            {
+                var o = Instantiate(bullet, transform.position, transform.rotation);
+                o.GetComponent<Cancer>()._cloned = true;
+                StartCoroutine(Pushing(o));
+            }
         }
     }
 }
