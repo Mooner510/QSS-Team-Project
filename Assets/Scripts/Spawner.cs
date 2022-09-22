@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Enemy;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,7 +33,10 @@ public class Spawner : MonoBehaviour
     {
         if (GameObject.Find("Player").GetComponent<Player>().IsDeath()) yield return null;
         yield return new WaitForSeconds(Random.Range(maxCycle, minCycle));
-        Instantiate(o, new Vector2(Random.Range(-2.75f, 2.75f), 6), transform.rotation);
+        Instantiate(o, new Vector2(Random.Range(-2.75f, 2.75f), 6),
+            o.GetComponent<Enemy.Enemy>().GetEnemyType() == EnemyType.Bacteria
+                ? Quaternion.Euler(0, 0, -45)
+                : transform.rotation);
         // if (enemy.GetComponent<Enemy.Enemy>().GetEnemyType() == EnemyType.Cancer)
         //     enemy.GetComponent<SpriteRenderer>().color = new Color(0.15f, 0.6f, 0.15f);
         if(!GameObject.Find("Player").GetComponent<Player>().IsDeath())

@@ -17,15 +17,15 @@ namespace LivingEntity
             _defaultSpeed = speed;
         }
 
-        public float GetMaxHealth() => maxHealth;
+        public virtual float GetMaxHealth() => maxHealth;
 
-        public void SetMaxHealth(float hp) => maxHealth = hp;
+        public void SetMaxHealth(float hp) => maxHealth = Math.Max(hp, 0);
 
-        public void AddMaxHealth(float hp) => maxHealth += hp;
+        public void AddMaxHealth(float hp) => maxHealth = Math.Max(maxHealth + hp, 0);
 
-        public float GetHealth() => _health;
+        public virtual float GetHealth() => _health;
 
-        public void SetHealth(float hp) => _health = Math.Min(Math.Max(hp, 0), maxHealth);
+        public void SetHealth(float hp) => _health = Utils.Distance(hp, 0, maxHealth);
 
         public void Damage(float hp)
         {
@@ -37,32 +37,32 @@ namespace LivingEntity
         public void Heal(float hp)
         {
             if (hp < 0) throw new ArgumentException("Cannot Input Negative Number");
-            _health = Math.Min(_health + hp, 100);
+            _health = Math.Min(_health + hp, maxHealth);
         }
 
-        public float GetDamage() => damage;
+        public virtual float GetDamage() => damage;
 
         public void SetDamage(float dmg) 
         {
             if (dmg < 0) throw new ArgumentException("Cannot Input Negative Number");
-            damage = dmg;
+            damage = Math.Max(dmg, 0);
         }
 
-        public float GetSpeed() => speed;
+        public virtual float GetSpeed() => speed;
 
         public void SetSpeed(float spd)
         {
             if (spd < 0) throw new ArgumentException("Cannot Input Negative Number");
-            speed = Math.Min(Math.Max(spd, 0), 100);
+            speed = Math.Max(spd, 0);
         }
 
-        public void AddSpeed(float spd) => speed = Math.Min(Math.Max(_health + spd, 0), 100);
+        public void AddSpeed(float spd) => speed = Math.Max(speed + spd, 0);
 
         public void ResetSpeed() => speed = _defaultSpeed;
 
         public float GetDefaultSpeed() => _defaultSpeed;
 
-        public bool IsDeath() => _health <= 0;
+        public virtual bool IsDeath() => _health <= 0;
 
         public virtual void Kill() => Destroy(gameObject);
     }
