@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3754035707678959234}
   - component: {fileID: 3754035707678959235}
   - component: {fileID: 3754035707678959236}
-  - component: {fileID: 249761713557818179}
+  - component: {fileID: 1201006808679616827}
   m_Layer: 8
   m_Name: NormalBacteria
   m_TagString: Enemy
@@ -94,30 +94,26 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.13, y: 0.12}
   serializedVersion: 2
   m_Radius: 2.96
---- !u!50 &249761713557818179
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &1201006808679616827
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3754035707678959238}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af79813986784d9e984330ceff30e174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 2
+  speed: 0.5
+  damage: 5
+  bullet: {fileID: 0}
+  attackDelay: 0.1

@@ -7,6 +7,7 @@ namespace Enemy.Enemies
     {
         [SerializeField] private float attackDelay;
         [SerializeField] private int distanceFrame;
+        [SerializeField] private float cloneSpeed;
         [SerializeField] private float cloneDistance;
         [SerializeField] private float cloneMaxCount;
         private bool _cloned;
@@ -17,7 +18,7 @@ namespace Enemy.Enemies
 
         private IEnumerator Pushing(GameObject o)
         {
-            var v = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * cloneDistance;
+            var v = new Vector2(Random.Range(-cloneSpeed, cloneSpeed), Random.Range(-cloneSpeed, cloneSpeed)) * cloneDistance;
             var push = 1f;
             for (var i = 0; i < distanceFrame; i++)
             {

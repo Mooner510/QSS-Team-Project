@@ -9,6 +9,8 @@ namespace Enemy.Enemies
         public override EnemyType GetEnemyType() => EnemyType.Bacteria;
 
         protected override float GetAttackDelay() => attackDelay;
+        
+        protected override Vector3 Movement() => Vector3.down;
 
         protected override void Attack()
         {

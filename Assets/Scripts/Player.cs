@@ -60,6 +60,7 @@ public class Player : Entity
 
     public void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(col.tag);
         switch (col.tag)
         {
             case "ScoreUp":
@@ -68,10 +69,10 @@ public class Player : Entity
             case "PainDown":
                 AddPain(-15);
                 break;
-            case "Heal":
+            case "heal":
                 Heal(15);
                 break;
-            case "Invincibility":
+            case "invincibility":
                 StopCoroutine(Invincible());
                 StartCoroutine(Invincible());
                 break;
@@ -79,8 +80,11 @@ public class Player : Entity
                 _bulletLevel = Math.Min(_bulletLevel + 1, 5);
                 break;
             case "Toxic":
-            case "Enemy":
                 if (!isInvincible) Damage(col.gameObject.GetComponent<Toxic>().GetDamage());
+                Destroy(col.gameObject);
+                break;
+            case "Enemy":
+                if (!isInvincible) Damage(col.gameObject.GetComponent<Enemy.Enemy>().GetDamage());
                 Destroy(col.gameObject);
                 break;
         }

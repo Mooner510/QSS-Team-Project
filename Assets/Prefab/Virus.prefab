@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1362878836576541540}
   - component: {fileID: 1362878836576541541}
   - component: {fileID: 1655173416442052099}
-  - component: {fileID: 8338906280606679701}
   m_Layer: 8
   m_Name: Virus
   m_TagString: Enemy
@@ -95,7 +94,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.3, y: 0.17}
@@ -114,28 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2.5
-  speed: 0.9
+  speed: 0.75
   damage: 4
   bullet: {fileID: 300550601489325435, guid: ba54bfc676a3e02498ad23260cb892e2, type: 3}
-  attackDelay: 5
---- !u!50 &8338906280606679701
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362878836576541542}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  attackDelay: 9

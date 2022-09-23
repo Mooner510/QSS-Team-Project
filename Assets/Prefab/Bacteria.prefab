@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8985571429918446312}
   - component: {fileID: 8985571429918446315}
   - component: {fileID: 2059338327329024475}
-  - component: {fileID: 6338706874498847484}
   m_Layer: 8
   m_Name: Bacteria
   m_TagString: Enemy
@@ -95,7 +94,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.106332354, y: -0.08732859}
@@ -114,28 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  speed: 0.8
+  speed: 0.6
   damage: 5
   bullet: {fileID: 300550601489325435, guid: ba54bfc676a3e02498ad23260cb892e2, type: 3}
-  attackDelay: 2.5
---- !u!50 &6338706874498847484
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8985571429918446317}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  attackDelay: 3

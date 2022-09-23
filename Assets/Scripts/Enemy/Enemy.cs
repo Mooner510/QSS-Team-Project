@@ -19,10 +19,13 @@ namespace Enemy
             _lastAttack = 0;
         }
 
+        protected virtual Vector3 Movement() => -transform.up + Vector3.down;
+
         private void Update()
         {
             if(Time.realtimeSinceStartup < 2) return;
-            transform.position += Vector3.down * Time.deltaTime * GetSpeed() * Math.Min(GetHealth() / GetMaxHealth() + 0.1f, 1);
+            transform.position += Movement() * Time.deltaTime * GetSpeed() *
+                                  Math.Min(GetHealth() / GetMaxHealth() + 0.1f, 1);
             if(!_attackable) return;
             if (_lastAttack + GetAttackDelay() * _scoreBoard.GetEnemyAttackBoost() >= Time.realtimeSinceStartup) return;
             _lastAttack = Time.realtimeSinceStartup;

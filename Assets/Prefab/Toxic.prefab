@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 300550601489325434}
   - component: {fileID: 9219108381303621672}
   - component: {fileID: 3922356548567818456}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Toxic
   m_TagString: Toxic
   m_Icon: {fileID: 0}
@@ -112,4 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6adb0a5b48406a80cc1ed524cd2b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2.25
+  speed: 2

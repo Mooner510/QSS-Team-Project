@@ -2,6 +2,6 @@
 {
     public enum EnemyType
     {
-        NormalBacteria, Bacteria, Cancer, Virus, Unknown
+        NormalBacteria, Bacteria, Cancer, Virus, CoronaBoss, Unknown
     }
 }
