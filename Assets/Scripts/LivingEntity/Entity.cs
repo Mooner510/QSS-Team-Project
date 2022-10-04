@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LivingEntity
@@ -27,11 +28,20 @@ namespace LivingEntity
 
         public void SetHealth(float hp) => _health = Utils.Distance(hp, 0, maxHealth);
 
-        public void Damage(float hp)
+        public virtual void Damage(float hp)
         {
             if (hp < 0) throw new ArgumentException("Cannot Input Negative Number");
             _health = Math.Max(_health - hp, 0);
             if(IsDeath()) Kill();
+            StartCoroutine(MakeRed());
+        }
+
+        private IEnumerator MakeRed()
+        {
+            var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = new Color(1f, 0, 0, spriteRenderer.color.a);
+            yield return new WaitForSeconds(0.4f);
+            spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a);
         }
 
         public void Heal(float hp)

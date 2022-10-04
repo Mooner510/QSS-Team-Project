@@ -16,29 +16,25 @@ namespace Enemy.Enemies
             {
                 new BossAttack(2, () =>
                 {
-                    Debug.Log("Attack 1");
                     for (var i = 150; i <= 210; i += 12)
                     {
-                        var o = Instantiate(bullets[0], transform.position, Quaternion.Euler(0, 0, i));
+                        var o = Instantiate(bullets[0], transform.position, Quaternion.Euler(0, 0, Random.Range(i - 6f, i + 6f)));
                         o.GetComponent<Toxic>().SetDamage(GetDamage());
                     }
                 }),
-                new BossAttack(3, () =>
-                {
-                    Debug.Log("Attack 2");
-                    StartCoroutine(Push(Instantiate(bullets[Random.Range(1, 5)], transform.position, Quaternion.identity)));
-                })
+                new BossAttack(3, () => StartCoroutine(Push(Instantiate(bullets[Random.Range(1, 5)], transform.position, Quaternion.identity))))
             };
             base.Start();
         }
 
-        private static IEnumerator Push(GameObject o)
+        private IEnumerator Push(GameObject o)
         {
             var q = Quaternion.Euler(0, 0, Random.Range(150, 210f));
-            var velocity = 0.15f;
+            var velocity = 0.5f;
             for (var i = 0f; i <= 2; i += Time.deltaTime)
             {
                 yield return null;
+                if(o != null) break;
                 o.transform.position += q * Vector3.forward * (velocity *= 0.975f);
             }
         }

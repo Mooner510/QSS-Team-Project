@@ -10,13 +10,19 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] private float enemyAttackBoost;
     [SerializeField] private float enemySpawnBoost;
     [SerializeField] private float speedBoostForPlayer;
+    [SerializeField] public GameObject particle;
+    [SerializeField] public GameObject item;
 
     private static int _score;
     private static float _timerStart;
 
     public float GetEnemyAttackBoost() => enemyAttackBoost;
 
-    public float GetEnemySpawnBoost() => enemySpawnBoost;
+    public float GetEnemySpawnBoost()
+    {
+        var time = Time.realtimeSinceStartup - _timerStart;
+        return enemySpawnBoost * (1 - time / (time + 120));
+    }
 
     public float GetSpeedBoostForPlayer() => speedBoostForPlayer;
 

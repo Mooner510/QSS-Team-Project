@@ -1,18 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace LivingEntity
 {
     public class Shooter : MonoBehaviour, IShooter
     {
         [SerializeField] private GameObject capsule;
+        [SerializeField] private Sprite[] sprites;
         // [SerializeField] private float arrowDamage;
         [SerializeField] private float defaultShootDelay;
+        private Player _player;
         private float _shootDelay;
         private float _shoot;
 
         private void Start()
         {
             _shootDelay = defaultShootDelay;
+            _player = GameObject.Find("Player").GetComponent<Player>();
         }
 
         private void Update()
@@ -26,11 +32,72 @@ namespace LivingEntity
         {
             if (_shoot + _shootDelay >= Time.realtimeSinceStartup) return;
             _shoot = Time.realtimeSinceStartup;
-            var pos = transform.position;
-            Instantiate(capsule, pos, Quaternion.identity);
-            // for (var i = 0; i < 5; i++) Instantiate(capsule, pos, Quaternion.Euler(0, 0, Random.Range(-6f, 6f)));
-            // if (!(Random.value <= 0.25f)) return;
-            // for (var i = 0; i < 5; i++) Instantiate(capsule, pos, Quaternion.Euler(0, 0, Random.Range(-6f, 6f)));
+            switch (_player.bulletLevel)
+            {
+                case 0:
+                    Launch(Quaternion.identity);
+                    break;
+                case 1:
+                case 2:
+                    Launch(Quaternion.identity);
+                    StartCoroutine(Launch(0.15f, Quaternion.identity));
+                    break;
+                case 3:
+                    Launch(Quaternion.identity);
+                    StartCoroutine(Launch(0.15f, Quaternion.identity));
+                    Launch(Random.value < 0.5f
+                        ? Quaternion.Euler(0, 0, Random.Range(-3f, -1f))
+                        : Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
+                    break;
+                case 4:
+                case 5:
+                    Launch(Quaternion.identity);
+                    StartCoroutine(Launch(0.15f, Quaternion.identity));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(-3f, -1f)));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
+                    break;
+                case 6:
+                    Launch(Quaternion.identity);
+                    StartCoroutine(Launch(0.15f, Quaternion.identity));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(-3f, -1f)));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
+                    StartCoroutine(Launch(0.15f, Random.value < 0.5f
+                        ? Quaternion.Euler(0, 0, Random.Range(-3f, -1f))
+                        : Quaternion.Euler(0, 0, Random.Range(1f, 3f))));
+                    break;
+                case 7:
+                case 8:
+                    Launch(Quaternion.identity);
+                    StartCoroutine(Launch(0.15f, Quaternion.identity));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(-3f, -1f)));
+                    StartCoroutine(Launch(0.15f, Quaternion.Euler(0, 0, Random.Range(-3f, -1f))));
+                    Launch(Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
+                    StartCoroutine(Launch(0.15f, Quaternion.Euler(0, 0, Random.Range(1f, 3f))));
+                    break;
+            }
+        }
+
+        private void Launch(Quaternion direction)
+        {
+            Instantiate(capsule, transform.position, direction).GetComponent<SpriteRenderer>().sprite = _player.bulletLevel switch
+            {
+                0 => sprites[0],
+                1 => sprites[0],
+                2 => sprites[1],
+                3 => sprites[1],
+                4 => sprites[1],
+                5 => sprites[2],
+                6 => sprites[2],
+                7 => sprites[2],
+                8 => sprites[3],
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        private IEnumerator Launch(float delay, Quaternion direction)
+        {
+            yield return new WaitForSeconds(delay);
+            Launch(direction);
         }
     }
 }

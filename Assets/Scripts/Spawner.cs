@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
     {
         if (GameObject.Find("Player").GetComponent<Player>().IsDeath()) yield return null;
         yield return new WaitForSeconds(Random.Range(maxCycle, minCycle));
-        Instantiate(o, new Vector2(Random.Range(-2.75f, 2.75f), 6),
+        Instantiate(o, new Vector2(Random.Range(-2.75f, 2.75f), 5.5f),
             o.GetComponent<Enemy.Enemy>().GetEnemyType() == EnemyType.Bacteria
                 ? Quaternion.Euler(0, 0, -45)
                 : transform.rotation);

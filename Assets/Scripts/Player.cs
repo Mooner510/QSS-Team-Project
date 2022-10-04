@@ -2,21 +2,26 @@ using System;
 using System.Collections;
 using LivingEntity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
-    [SerializeField] private bool isInvincible;
+    [SerializeField] private Sprite[] sprites;
     private SpriteRenderer _plrSprite;
+    private bool _invincible;
+    private bool _invincibleByDamage;
     private float _pain;
-    private int _bulletLevel;
+    public int bulletLevel;
     private ScoreBoard _scoreBoard;
 
     protected override void Start()
     {
         base.Start();
+        _invincible = false;
+        _invincibleByDamage = false;
         _plrSprite = gameObject.GetComponent<SpriteRenderer>();
         _scoreBoard = GameObject.Find("ScoreBoard").GetComponent<ScoreBoard>();
-        _bulletLevel = 0;
+        bulletLevel = 0;
         _pain = 0;
     }
 
@@ -25,13 +30,13 @@ public class Player : Entity
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             var pos = transform.position;
-            pos.x = Utils.Distance(pos.x - GetSpeed() * Time.deltaTime * _scoreBoard.GetSpeedBoostForPlayer(), -2.4f, 2.4f);
+            pos.x = Utils.Distance(pos.x - GetSpeed() * Time.deltaTime * _scoreBoard.GetSpeedBoostForPlayer(), -2.5f, 2.5f);
             transform.position = pos;
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             var pos = transform.position;
-            pos.x = Utils.Distance(pos.x + GetSpeed() * Time.deltaTime * _scoreBoard.GetSpeedBoostForPlayer(), -2.4f, 2.4f);
+            pos.x = Utils.Distance(pos.x + GetSpeed() * Time.deltaTime * _scoreBoard.GetSpeedBoostForPlayer(), -2.5f, 2.5f);
             transform.position = pos;
         }
         else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
@@ -52,56 +57,99 @@ public class Player : Entity
 
     public void SetPain(float pain) => _pain = Utils.Distance(pain, 0, 100);
 
-    public void AddPain(float pain) => _pain = Utils.Distance(_pain + pain, 0, 100);
+    public void AddPain(float pain)
+    {
+        _pain = Utils.Distance(_pain + pain, 0, 100);
+        if(_pain >= 100) Kill();
+    }
 
-    public override float GetDamage() => base.GetDamage() + _bulletLevel;
+    public override float GetDamage()
+    {
+        float additive = 0;
+        if(bulletLevel >= 3) additive += 1f;
+        else if (bulletLevel >= 2) additive += 0.25f;
+        return base.GetDamage() + additive;
+    }
 
     public override bool IsDeath() => base.IsDeath() && GetPain() <= 0;
 
+    public override void Kill() => SceneManager.LoadScene("Scenes/Restart");
+
     public void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.tag);
+        if(IsDeath()) return;
         switch (col.tag)
         {
-            case "ScoreUp":
-                 ScoreBoard.AddScore(200);
-                break;
-            case "PainDown":
-                AddPain(-15);
-                break;
-            case "heal":
-                Heal(15);
-                break;
-            case "invincibility":
-                StopCoroutine(Invincible());
-                StartCoroutine(Invincible());
-                break;
-            case "BulletUpgrade":
-                _bulletLevel = Math.Min(_bulletLevel + 1, 5);
+            case "Item":
+                switch (col.GetComponent<Item>().GetItemType())
+                {
+                    case ItemType.ScoreUp:
+                        ScoreBoard.AddScore(200);
+                        break;
+                    case ItemType.PainDown:
+                        AddPain(-10);
+                        break;
+                    case ItemType.Heal:
+                        Heal(15);
+                        break;
+                    case ItemType.Invincibility:
+                        StopCoroutine(Invincible());
+                        StartCoroutine(Invincible());
+                        break;
+                    case ItemType.BulletUpgrade:
+                        bulletLevel = Math.Min(bulletLevel + 1, 8);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                Destroy(col.gameObject);
                 break;
             case "Toxic":
-                if (!isInvincible) Damage(col.gameObject.GetComponent<Toxic>().GetDamage());
-                Destroy(col.gameObject);
+                if (!_invincible && !_invincibleByDamage)
+                {
+                    Damage(col.gameObject.GetComponent<Toxic>().GetDamage());
+                    Destroy(col.gameObject);
+                }
                 break;
             case "Enemy":
-                if (!isInvincible) Damage(col.gameObject.GetComponent<Enemy.Enemy>().GetDamage());
-                Destroy(col.gameObject);
+                if (!_invincible && !_invincibleByDamage)
+                {
+                    Damage(col.gameObject.GetComponent<Enemy.Enemy>().GetDamage());
+                    Destroy(col.gameObject);
+                }
                 break;
         }
     }
 
-    private IEnumerator Invincible()
+    public override void Damage(float hp)
     {
-        isInvincible = true;
-        _plrSprite.color = new Color(1, 1, 1, 0.5f);
-        
-        yield return new WaitForSeconds(2.5f);
-        
-        _plrSprite.color = new Color(1, 1, 1, 0.75f);
-        
-        yield return new WaitForSeconds(0.5f);
-        
-        isInvincible = false;
+        StopCoroutine(InvincibleByDamage());
+        StartCoroutine(InvincibleByDamage());
+        base.Damage(hp);
+        if(IsDeath()) Kill();
+    }
+    
+    private IEnumerator InvincibleByDamage()
+    {
+        _invincibleByDamage = true;
+        for(var j = 0; j < 2; j++) for (var i = 0f; i <= 1; i += Time.deltaTime)
+        {
+            _plrSprite.color = new Color(1, 1, 1, i < 0.5 ? 0.25f + i : 0.75f - (i - 1));
+            yield return null;
+        }
+        _invincibleByDamage = false;
         _plrSprite.color = new Color(1, 1, 1, 1f);
     }
+    
+    private IEnumerator Invincible()
+    {
+        _invincible = true;
+        GetComponent<SpriteRenderer>().sprite = sprites[1];
+        
+        yield return new WaitForSeconds(7f);
+        
+        _invincible = false;
+        GetComponent<SpriteRenderer>().sprite = sprites[0];
+    }
+
 }
