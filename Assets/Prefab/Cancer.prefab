@@ -117,7 +117,7 @@ MonoBehaviour:
   damage: 2
   bullet: {fileID: 7175071125821031328}
   score: 1
-  attackDelay: 12
+  attackDelay: 20
   distanceFrame: 260
   cloneSpeed: 0.5
   cloneDistance: 1.2

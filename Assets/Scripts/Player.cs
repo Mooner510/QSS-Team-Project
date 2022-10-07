@@ -71,7 +71,7 @@ public class Player : Entity
         return base.GetDamage() + additive;
     }
 
-    public override bool IsDeath() => base.IsDeath() && GetPain() <= 0;
+    public override bool IsDeath() => base.IsDeath() || GetPain() <= 0;
 
     public override void Kill() => SceneManager.LoadScene("Scenes/Restart");
 
@@ -126,7 +126,6 @@ public class Player : Entity
         StopCoroutine(InvincibleByDamage());
         StartCoroutine(InvincibleByDamage());
         base.Damage(hp);
-        if(IsDeath()) Kill();
     }
     
     private IEnumerator InvincibleByDamage()

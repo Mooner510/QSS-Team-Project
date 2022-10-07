@@ -21,7 +21,7 @@ public class ScoreBoard : MonoBehaviour
     public float GetEnemySpawnBoost()
     {
         var time = Time.realtimeSinceStartup - _timerStart;
-        return enemySpawnBoost * (1 - time / (time + 120));
+        return enemySpawnBoost * (1 - time / (time + 480));
     }
 
     public float GetSpeedBoostForPlayer() => speedBoostForPlayer;

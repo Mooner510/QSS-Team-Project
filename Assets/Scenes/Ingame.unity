@@ -422,7 +422,7 @@ MonoBehaviour:
   timerText: {fileID: 469511199}
   scoreText: {fileID: 371634087}
   enemyAttackBoost: 1
-  enemySpawnBoost: 2.5
+  enemySpawnBoost: 3
   speedBoostForPlayer: 1
   particle: {fileID: 4813095920359022362, guid: 4d1ad861e65ff2046b48f5bc718c1474, type: 3}
   item: {fileID: 2498146537941375049, guid: 456b287823e479c409b75d1773192c83, type: 3}
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 7977475622844603094, guid: e5c4f12ed73299046abe0eca1f340794, type: 3}
-  spawnTime: 5
+  spawnTime: 30
   spawnPos: {fileID: 851677495}
 --- !u!1 &722618294
 GameObject:

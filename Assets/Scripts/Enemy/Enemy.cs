@@ -59,7 +59,7 @@ namespace Enemy
                 var o2 = Instantiate(particle, transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)), Quaternion.identity);
                 o2.GetComponent<SpriteRenderer>().color = GetRandomColor();
                 o2.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                o2.GetComponent<Rigidbody2D>().gravityScale = Random.Range(0.1f, 0.5f);
+                o2.GetComponent<Rigidbody2D>().gravityScale = Random.Range(0.6f, 0.9f);
             }
 
             if (GetEnemyType() != EnemyType.Cancer && Random.value <= 0.1)
