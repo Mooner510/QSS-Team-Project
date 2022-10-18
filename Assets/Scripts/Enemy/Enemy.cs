@@ -62,7 +62,7 @@ namespace Enemy
                 o2.GetComponent<Rigidbody2D>().gravityScale = Random.Range(0.6f, 0.9f);
             }
 
-            if (GetEnemyType() != EnemyType.Cancer && Random.value <= 0.1)
+            if (GetEnemyType() != EnemyType.Cancer && Random.value <= 0.4f)
                 Instantiate(scoreBoard.item, transform.position, Quaternion.identity);
             base.Kill();
         }

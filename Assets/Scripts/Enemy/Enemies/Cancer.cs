@@ -6,7 +6,6 @@ namespace Enemy.Enemies
     public class Cancer : Enemy
     {
         [SerializeField] private float attackDelay;
-        [SerializeField] private int distanceFrame;
         [SerializeField] private float cloneSpeed;
         [SerializeField] private float cloneDistance;
         [SerializeField] private float cloneMaxCount;
@@ -20,9 +19,9 @@ namespace Enemy.Enemies
         {
             var v = new Vector2(Random.Range(-cloneSpeed, cloneSpeed), Random.Range(-cloneSpeed, cloneSpeed)) * cloneDistance;
             var push = 1f;
-            for (var i = 0; i < distanceFrame; i++)
+            for (var i = 0f; i < 3; i += Time.fixedDeltaTime)
             {
-                yield return null;
+                yield return new WaitForFixedUpdate();
                 if(o == null) break;
                 push *= 0.98f;
                 o.transform.Translate(v * push * Time.deltaTime);

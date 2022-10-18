@@ -35,21 +35,21 @@ namespace LivingEntity
             switch (_player.bulletLevel)
             {
                 case 0:
+                case 1:
                     Launch(Quaternion.identity);
                     break;
-                case 1:
                 case 2:
+                case 3:
                     Launch(Quaternion.identity);
                     StartCoroutine(Launch(0.15f, Quaternion.identity));
                     break;
-                case 3:
+                case 4:
                     Launch(Quaternion.identity);
                     StartCoroutine(Launch(0.15f, Quaternion.identity));
                     Launch(Random.value < 0.5f
                         ? Quaternion.Euler(0, 0, Random.Range(-3f, -1f))
                         : Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
                     break;
-                case 4:
                 case 5:
                     Launch(Quaternion.identity);
                     StartCoroutine(Launch(0.15f, Quaternion.identity));
@@ -57,6 +57,7 @@ namespace LivingEntity
                     Launch(Quaternion.Euler(0, 0, Random.Range(1f, 3f)));
                     break;
                 case 6:
+                case 7:
                     Launch(Quaternion.identity);
                     StartCoroutine(Launch(0.15f, Quaternion.identity));
                     Launch(Quaternion.Euler(0, 0, Random.Range(-3f, -1f)));
@@ -65,7 +66,6 @@ namespace LivingEntity
                         ? Quaternion.Euler(0, 0, Random.Range(-3f, -1f))
                         : Quaternion.Euler(0, 0, Random.Range(1f, 3f))));
                     break;
-                case 7:
                 case 8:
                     Launch(Quaternion.identity);
                     StartCoroutine(Launch(0.15f, Quaternion.identity));
@@ -82,13 +82,13 @@ namespace LivingEntity
             Instantiate(capsule, transform.position, direction).GetComponent<SpriteRenderer>().sprite = _player.bulletLevel switch
             {
                 0 => sprites[0],
-                1 => sprites[0],
+                1 => sprites[1],
                 2 => sprites[1],
-                3 => sprites[1],
-                4 => sprites[1],
+                3 => sprites[2],
+                4 => sprites[2],
                 5 => sprites[2],
                 6 => sprites[2],
-                7 => sprites[2],
+                7 => sprites[3],
                 8 => sprites[3],
                 _ => throw new ArgumentOutOfRangeException()
             };
