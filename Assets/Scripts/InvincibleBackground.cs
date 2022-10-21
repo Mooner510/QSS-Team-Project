@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InvincibleBackground : MonoBehaviour
 {
     private Player _player;
     private Color _preColor;
     private SpriteRenderer _renderer;
+
+    private static readonly Color AquaColor = new Color(0, 1f, 1f, 0.3f);
     
     private void Start()
     {
@@ -18,8 +18,7 @@ public class InvincibleBackground : MonoBehaviour
 
     private void Update()
     {
-        _preColor = _player.IsInvincible() ? Color.cyan : Color.white;
-        _preColor.a = _player.IsInvincible() ? 0.6f : 0;
+        _preColor = _player.IsInvincible() ? AquaColor : Color.clear;
         var color = _renderer.color;
         color += (_preColor - color) * Time.deltaTime * 1.35f;
         _renderer.color = color;

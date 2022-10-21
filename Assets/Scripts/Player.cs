@@ -69,14 +69,14 @@ public class Player : Entity {
             8 => 1.25f,
             _ => 1
         };
-        float additive = 0;
-        if (bulletLevel >= 7)
-            additive += 1f;
-        else if (bulletLevel >= 4)
-            additive += 0.5f;
-        else if (bulletLevel >= 1)
-            additive += 0.25f;
-        return base.GetDamage() + additive;
+        // float additive = 0;
+        // if (bulletLevel >= 7)
+        //     additive += 1f;
+        // else if (bulletLevel >= 4)
+        //     additive += 0.5f;
+        // else if (bulletLevel >= 1)
+        //     additive += 0.25f;
+        // return base.GetDamage() + additive;
     }
 
     public override bool IsDeath() => base.IsDeath() || GetPain() >= 100;

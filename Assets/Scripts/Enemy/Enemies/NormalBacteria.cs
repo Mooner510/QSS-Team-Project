@@ -34,6 +34,7 @@ namespace Enemy.Enemies
             _turnChance += 0.005f * Time.deltaTime;
             rot.z += Random.Range(0, 1f) * (_right ? 1 : -1);
             transform.rotation = rot;
+            StartCoroutine(StartAttackDelay());
         }
     }
 }

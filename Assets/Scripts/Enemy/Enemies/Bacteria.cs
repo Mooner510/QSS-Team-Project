@@ -16,6 +16,7 @@ namespace Enemy.Enemies
         {
             var o = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, 180));
             o.GetComponent<Toxic>().SetDamage(GetDamage());
+            StartCoroutine(StartAttackDelay());
         }
     }
 }

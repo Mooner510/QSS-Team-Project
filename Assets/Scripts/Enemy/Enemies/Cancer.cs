@@ -38,6 +38,7 @@ namespace Enemy.Enemies
                 o.GetComponent<Cancer>()._cloned = true;
                 StartCoroutine(Pushing(o));
             }
+            StartCoroutine(StartAttackDelay());
         }
     }
 }

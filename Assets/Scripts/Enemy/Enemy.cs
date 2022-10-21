@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using LivingEntity;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -31,7 +32,7 @@ namespace Enemy
             if(!_attackable) return;
             if (_lastAttack + GetAttackDelay() * _scoreBoard.GetEnemyAttackBoost() >= Time.realtimeSinceStartup) return;
             _lastAttack = Time.realtimeSinceStartup;
-            Attack();
+            StartCoroutine(StartAttackDelay());
         }
 
         private void OnBecameInvisible()
@@ -44,8 +45,13 @@ namespace Enemy
         public virtual EnemyType GetEnemyType() => EnemyType.Unknown;
 
         protected virtual float GetAttackDelay() => 0;
-
+        
         public bool IsAttackAble() => _attackable;
+
+        protected IEnumerator StartAttackDelay() {
+            yield return new WaitForSeconds(GetAttackDelay() * _scoreBoard.GetEnemyAttackBoost());
+            Attack();
+        }
 
         protected virtual void Attack() {}
 
@@ -57,30 +63,14 @@ namespace Enemy
             for (var i = 0; i < 6; i++)
             {
                 var o2 = Instantiate(particle, transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)), Quaternion.identity);
-                o2.GetComponent<SpriteRenderer>().color = GetRandomColor();
+                o2.GetComponent<SpriteRenderer>().color = GetEnemyType().GetRandomColor();
                 o2.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 o2.GetComponent<Rigidbody2D>().gravityScale = Random.Range(0.6f, 0.9f);
             }
 
-            if (GetEnemyType() != EnemyType.Cancer && Random.value <= 0.4f)
+            if (GetEnemyType() != EnemyType.Cancer && Random.value <= 0.3f)
                 Instantiate(scoreBoard.item, transform.position, Quaternion.identity);
             base.Kill();
-        }
-
-        private Color GetRandomColor()
-        {
-            return GetEnemyType() switch
-            {
-                EnemyType.NormalBacteria => new Color(Random.Range(0f, 0.05f), Random.Range(0f, 0.05f),
-                    Random.Range(0.3f, 0.5f)),
-                EnemyType.Bacteria => new Color(Random.Range(0.3f, 0.5f), Random.Range(0.3f, 0.5f), Random.Range(0.6f, 1f)),
-                EnemyType.Cancer => new Color(Random.Range(0.6f, 1f), Random.Range(0f, 0.1f), Random.Range(0f, 0.1f)),
-                EnemyType.Virus => new Color(Random.Range(0f, 0.1f), Random.Range(0.6f, 1f), Random.Range(0f, 0.1f)),
-                EnemyType.CoronaBoss => new Color(Random.Range(0.6f, 1f), Random.Range(0f, 0.1f),
-                    Random.Range(0f, 0.1f)),
-                EnemyType.Unknown => new Color(Random.Range(0.6f, 1f), Random.Range(0.6f, 1f), Random.Range(0.6f, 1f)),
-                _ => throw new ArgumentOutOfRangeException()
-            };
         }
 
         private void OnTriggerEnter2D(Collider2D col)

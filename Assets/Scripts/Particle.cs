@@ -6,7 +6,7 @@ public class Particle : MonoBehaviour
 
     private void Start() => _beforeScale = transform.localScale;
 
-    private void Update() => transform.localScale -= _beforeScale * Time.deltaTime / 4;
+    private void FixedUpdate() => transform.localScale -= _beforeScale * Time.fixedDeltaTime / 4;
 
     private void OnBecameInvisible() => Destroy(gameObject);
 }
